@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import '../enteties/ip.dart';
 
 abstract class IpFinderRepository{
-  Future<Either<Failure, Ip>> getMyIp();
-  Future<Either<Failure, IpInfo>> getMyIpInfo();
+  Future<Either<Failure, IpEntety>> getMyIp();
+  Future<Either<Failure, IpInfoEntety>> getMyIpInfo();
 
 }

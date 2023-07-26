@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ip_finder/features/ip_finder/domain/enteties/ip_Info.dart';
 
+import '../../domain/enteties/ip.dart';
 import '../../domain/usecases/get_my_ip_info.dart';
 
 
@@ -18,9 +19,10 @@ class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
 
   final GetMyIpInfo getMyIpInfo;
 
-  void _onGetMyIpInfo(GetMyIpInfoEvent event, Emitter<IpFinderState> state){
+  void _onGetMyIpInfo(GetMyIpInfoEvent event, Emitter<IpFinderState> state) async{
     emit(LoadingState());
-    final failureOrIp =
+    final failureOrIp = await getMyIpInfo();
+    emit(failureOrIp.fold((failure) => ErrorState('bruh thats a error'), (ip) => LoadedState(ip)));
 
   }
 }

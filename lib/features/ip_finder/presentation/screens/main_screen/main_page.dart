@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../injection_container.dart';
+import '../../bloc/ip_finder_bloc.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -8,26 +12,43 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SubjectBloc(),
+      create: (BuildContext context) => sl<IpFinderBloc>(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('fgfcg'),
+          BlocBuilder<IpFinderBloc,IpFinderState>(
+              builder: (context, state){
+                if(state is EmptyState){
+                  return Text('emptyState');
+                } else if(state is LoadingState){
+                  return Text('loadingState');
+                }else if(state is LoadedState){
+                  return Text(state.ipEntety.ip.toString());
+                }else if(state is ErrorState){
+                  return Text('errorState');
+                }else{
+                  return Text('bruh');
+                }
+              }
+          ),
+          const Text('^^^^^^^^^^^'),
           const SizedBox(height: 20),
           TextButton(
             onPressed: () {
 
+              BlocProvider.of<IpFinderBloc>(context).add(GetMyIpInfoEvent());
+
             },
-            child: Text('Посмотреть свой IP'),
+            child: const Text('Посмотреть свой IP'),
           ),
           const SizedBox(height: 20),
-          TextField(),
+          const TextField(),
           const SizedBox(height: 20),
           TextButton(
             onPressed: () {
 
             },
-            child: Text('Посмотреть свой другой IP'),
+            child: const Text('Посмотреть свой другой IP'),
           ),
         ],
       ),
