@@ -26,10 +26,10 @@ class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
       if (response.statusCode == 401){
         throw ServerException();
       }
-      final myJson = response.transform(utf8.decoder)
+      final myJson = (await response.transform(utf8.decoder)
           .toList()
           .then((value) => value.join())
-          .then<dynamic>((v) => json.decode(v)) as Map<String, dynamic>;
+          .then<dynamic>((v) => json.decode(v))) as Map<String, dynamic>;
       final ipResponseModel = IpModel.fromJson(myJson);
       return ipResponseModel;
   }

@@ -33,14 +33,7 @@ class MainPage extends StatelessWidget {
           ),
           const Text('^^^^^^^^^^^'),
           const SizedBox(height: 20),
-          TextButton(
-            onPressed: () {
-
-              BlocProvider.of<IpFinderBloc>(context).add(GetMyIpInfoEvent());
-
-            },
-            child: const Text('Посмотреть свой IP'),
-          ),
+          ButtonWidget(),
           const SizedBox(height: 20),
           const TextField(),
           const SizedBox(height: 20),
@@ -52,6 +45,22 @@ class MainPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ButtonWidget extends StatelessWidget {
+  const ButtonWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        BlocProvider.of<IpFinderBloc>(context).add(GetMyIpInfoEvent());
+      },
+      child: const Text('Посмотреть свой IP'),
     );
   }
 }
