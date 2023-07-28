@@ -1,4 +1,3 @@
-//TODO: сделать имплементацию
 import 'package:dartz/dartz.dart';
 import 'package:ip_finder/core/error/failures.dart';
 import 'package:ip_finder/features/ip_finder/data/data_sources/ip_finder_remote_data_sources.dart';
@@ -27,9 +26,13 @@ class IpFinderRepositoryImpl implements IpFinderRepository{
   }
 
   @override
-  Future<Either<Failure, IpInfoEntety>> getMyIpInfo() async{
-    // TODO: implement getMyIpInfo
-    throw UnimplementedError();
+  Future<Either<Failure, IpInfoEntety>> getMyIpInfo(String ipString) async{
+    if(await networkInfo.isConnected){
+      final remoteIpInfo = await ipFinderRemoteDataSource.getIpInfo(ipString);
+      return Right(remoteIpInfo);
+    }else{
+      return Left(ServerFailure());
+    }
   }
 
 }

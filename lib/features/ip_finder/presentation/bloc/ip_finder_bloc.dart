@@ -1,6 +1,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:ip_finder/core/usecases/use_case_my_ip.dart';
 import 'package:ip_finder/features/ip_finder/domain/enteties/ip_Info.dart';
 
 import '../../domain/enteties/ip.dart';
@@ -12,17 +13,25 @@ part 'ip_finder_state.dart';
 
 class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
   IpFinderBloc({
-    required this.getMyIpInfo
+    required this.getMyIpInfo,
+    required this.getMyIp
 }) : super(EmptyState()) {
     on<GetMyIpInfoEvent>(_onGetMyIpInfo);
   }
 
+  final GetMyIp getMyIp;
   final GetMyIpInfo getMyIpInfo;
 
   void _onGetMyIpInfo(GetMyIpInfoEvent event, Emitter<IpFinderState> state) async{
     emit(LoadingState());
-    final failureOrIp = await getMyIpInfo();
-    emit(failureOrIp.fold((failure) => ErrorState('bruh thats a error'), (ip) => LoadedState(ip)));
-
+    final failureOrIpEither = await getMyIp.call(NoParams());
+//    emit(failureOrIp.fold((failure) => ErrorState('bruh thats a error'), (ip) => LoadedState(ip)));
+    final failureOrIp = failureOrIpEither.fold((failure) => ErrorState('bruh'), (ip) => (ip));
+    if(failureOrIp is ErrorState){
+      emit(failureOrIp);
+      throw UnimplementedError();
+    }
+    final failureOrIpInfoEither = await getMyIpInfo.call(Params(ipString: (failureOrIp as IpEntety).ip));
+    emit(failureOrIpInfoEither.fold((failure) => ErrorState('thats a error over there'), (ipInfo) => LoadedState(ipInfo)));
   }
 }

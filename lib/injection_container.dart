@@ -13,10 +13,12 @@ final sl = GetIt.instance;
 void init() {
   sl.registerFactory(
     () => IpFinderBloc(
+      getMyIp: sl(),
       getMyIpInfo: sl(),
     ),
   );
 
+  sl.registerLazySingleton(() => GetMyIp(sl()));
   sl.registerLazySingleton(() => GetMyIpInfo(sl()));
 
   sl.registerLazySingleton<IpFinderRepository>(

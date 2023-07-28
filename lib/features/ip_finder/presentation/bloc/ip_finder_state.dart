@@ -15,11 +15,11 @@ class LoadingState extends IpFinderState {
 }
 
 class LoadedState extends IpFinderState {
-  LoadedState(this.ipEntety);
-  final IpEntety ipEntety;
+  LoadedState(this.ipInfoEntety);
+  final IpInfoEntety ipInfoEntety;
 
   @override
-  List<Object> get props => [ipEntety];
+  List<Object> get props => [ipInfoEntety];
 }
 
 class ErrorState extends IpFinderState {

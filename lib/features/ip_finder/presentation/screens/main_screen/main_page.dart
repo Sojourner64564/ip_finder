@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ip_finder/features/ip_finder/presentation/screens/main_screen/text_output_widget.dart';
 
 import '../../../../../injection_container.dart';
 import '../../bloc/ip_finder_bloc.dart';
@@ -23,7 +24,7 @@ class MainPage extends StatelessWidget {
                 } else if(state is LoadingState){
                   return Text('loadingState');
                 }else if(state is LoadedState){
-                  return Text(state.ipEntety.ip.toString());
+                  return TextOutputWidget(ipInfoEntety: state.ipInfoEntety,);
                 }else if(state is ErrorState){
                   return Text('errorState');
                 }else{

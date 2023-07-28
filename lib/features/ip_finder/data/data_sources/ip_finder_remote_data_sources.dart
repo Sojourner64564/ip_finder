@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 abstract class IpFinderRemoteDataSource{
 Future<IpModel> getIp();
-Future<IpInfoModel> getIpInfo();
+Future<IpInfoModel> getIpInfo(String ipString);
 }
 
 class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
@@ -35,9 +35,19 @@ class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
   }
 
   @override
-  Future<IpInfoModel> getIpInfo() {
-    // TODO: implement getIpInfo
-    throw UnimplementedError();
+  Future<IpInfoModel> getIpInfo(String ipString) async{
+    final url = Uri.parse('https://ipinfo.io/$ipString/geo');
+    final request = await httpClient.getUrl(url);
+    final response = await request.close();
+    if(response.statusCode == 401){
+      throw ServerException();
+    }
+    final myJson = (await response.transform(utf8.decoder)
+        .toList()
+        .then((value) => value.join())
+        .then<dynamic>((v) => json.decode(v))) as Map<String, dynamic>;
+    final ipInfoResponseModel = IpInfoModel.fromJson(myJson);
+    return ipInfoResponseModel;
   }
 
 }
