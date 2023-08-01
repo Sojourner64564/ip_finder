@@ -37,7 +37,9 @@ class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
 
   void _onGetOtherIpInfo(GetOtherIpInfoEvent event, Emitter<IpFinderState> state) async{
     emit(LoadingState());
-    final otherIpString = event.otherIpString;
+    final String otherIpString = event.otherIpString;
+    final failureOrIpOtherInfoEither = await getMyIpInfo.call(Params(ipString: otherIpString));
+    emit(failureOrIpOtherInfoEither.fold((failure) => ErrorState('message'), (ipInfo) => LoadedState(ipInfo)));
   }
 
 

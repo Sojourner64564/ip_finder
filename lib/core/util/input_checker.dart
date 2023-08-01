@@ -26,7 +26,7 @@ print('=------------------------------------------------------------------------
           boolNumbers = !boolNumbers;
           boolDots = !boolDots;
           groupNumber = 0;
-          continue;
+
         }
           if(exampleString.any(list[i].contains)){
             groupNumber++;
@@ -34,6 +34,7 @@ print('=------------------------------------------------------------------------
             boolNumbers = !boolNumbers;
             boolDots = !boolDots;
             groupNumber = 0;
+
           }
       }
 
@@ -42,11 +43,12 @@ print('=------------------------------------------------------------------------
           boolNumbers = !boolNumbers;
           boolDots = !boolDots;
           dots = 0;
-          continue;
+
         }
         if(list[i] == '.'){
           dots++;
         }else{
+
           print('Тотали Братан Момент');
         }
       }
