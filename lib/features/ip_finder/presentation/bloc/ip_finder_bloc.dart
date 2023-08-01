@@ -17,6 +17,7 @@ class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
     required this.getMyIp
 }) : super(EmptyState()) {
     on<GetMyIpInfoEvent>(_onGetMyIpInfo);
+    on<GetOtherIpInfoEvent>(_onGetOtherIpInfo);
   }
 
   final GetMyIp getMyIp;
@@ -25,7 +26,6 @@ class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
   void _onGetMyIpInfo(GetMyIpInfoEvent event, Emitter<IpFinderState> state) async{
     emit(LoadingState());
     final failureOrIpEither = await getMyIp.call(NoParams());
-//    emit(failureOrIp.fold((failure) => ErrorState('bruh thats a error'), (ip) => LoadedState(ip)));
     final failureOrIp = failureOrIpEither.fold((failure) => ErrorState('bruh'), (ip) => (ip));
     if(failureOrIp is ErrorState){
       emit(failureOrIp);
@@ -34,4 +34,11 @@ class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
     final failureOrIpInfoEither = await getMyIpInfo.call(Params(ipString: (failureOrIp as IpEntety).ip));
     emit(failureOrIpInfoEither.fold((failure) => ErrorState('thats a error over there'), (ipInfo) => LoadedState(ipInfo)));
   }
+
+  void _onGetOtherIpInfo(GetOtherIpInfoEvent event, Emitter<IpFinderState> state) async{
+    emit(LoadingState());
+    final otherIpString = event.otherIpString;
+  }
+
+
 }

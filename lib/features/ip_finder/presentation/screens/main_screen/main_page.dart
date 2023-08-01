@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ip_finder/features/ip_finder/presentation/screens/main_screen/text_output_widget.dart';
 
+import '../../../../../core/util/input_checker.dart';
 import '../../../../../injection_container.dart';
 import '../../bloc/ip_finder_bloc.dart';
 
@@ -12,6 +13,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InputChecker.checkInput('145.255.9.219');
     return BlocProvider(
       create: (BuildContext context) => sl<IpFinderBloc>(),
       child: Column(
@@ -34,13 +36,15 @@ class MainPage extends StatelessWidget {
           ),
           const Text('^^^^^^^^^^^'),
           const SizedBox(height: 20),
-          ButtonWidget(),
+          const ButtonWidget(),
           const SizedBox(height: 20),
-          const TextField(),
+          TextField(
+          controller: controller,
+          ),
           const SizedBox(height: 20),
           TextButton(
             onPressed: () {
-
+              sl<IpFinderBloc>().add(GetOtherIpInfoEvent(controller.text));
             },
             child: const Text('Посмотреть свой другой IP'),
           ),
@@ -59,7 +63,8 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        BlocProvider.of<IpFinderBloc>(context).add(GetMyIpInfoEvent());
+       // BlocProvider.of<IpFinderBloc>(context).add(GetMyIpInfoEvent());
+        sl<IpFinderBloc>().add(GetMyIpInfoEvent());
       },
       child: const Text('Посмотреть свой IP'),
     );
