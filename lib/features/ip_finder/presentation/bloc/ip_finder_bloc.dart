@@ -12,7 +12,7 @@ import '../../domain/usecases/get_my_ip_info.dart';
 part 'ip_finder_event.dart';
 part 'ip_finder_state.dart';
 
-@injectable
+@lazySingleton
 class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
   IpFinderBloc(
      this.getMyIpInfo, //req//req

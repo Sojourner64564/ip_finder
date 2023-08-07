@@ -15,7 +15,7 @@ Future<IpModel> getIp();
 Future<IpInfoModel> getIpInfo(String ipString);
 }
 
-@Injectable(as: IpFinderRemoteDataSource)
+@LazySingleton(as: IpFinderRemoteDataSource)
 class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
   IpFinderRemoteDataSourceImpl();
 

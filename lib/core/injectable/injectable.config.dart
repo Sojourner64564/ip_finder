@@ -36,7 +36,7 @@ _i1.GetIt $initGetIt(
   final registerModuleConnectionChecker = _$RegisterModuleConnectionChecker();
   gh.factory<_i3.InternetConnectionChecker>(
       () => registerModuleConnectionChecker.internetConnection);
-  gh.factory<_i4.IpFinderRemoteDataSource>(
+  gh.lazySingleton<_i4.IpFinderRemoteDataSource>(
       () => _i4.IpFinderRemoteDataSourceImpl());
   gh.lazySingleton<_i5.NetworkInfo>(
       () => _i5.NetworkInfoImpl(get<_i3.InternetConnectionChecker>()));
@@ -48,7 +48,7 @@ _i1.GetIt $initGetIt(
       () => _i8.GetMyIp(get<_i6.IpFinderRepository>()));
   gh.lazySingleton<_i8.GetMyIpInfo>(
       () => _i8.GetMyIpInfo(get<_i6.IpFinderRepository>()));
-  gh.factory<_i9.IpFinderBloc>(() => _i9.IpFinderBloc(
+  gh.lazySingleton<_i9.IpFinderBloc>(() => _i9.IpFinderBloc(
         get<_i8.GetMyIpInfo>(),
         get<_i8.GetMyIp>(),
       ));
