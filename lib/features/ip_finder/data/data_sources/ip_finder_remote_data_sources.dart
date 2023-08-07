@@ -1,20 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+
 import '../../../../core/error/exceptions.dart';
 import '../models/ip_info_model.dart';
 import '../models/ip_model.dart';
 import 'package:http/http.dart' as http;
+
 
 abstract class IpFinderRemoteDataSource{
 Future<IpModel> getIp();
 Future<IpInfoModel> getIpInfo(String ipString);
 }
 
+@Injectable(as: IpFinderRemoteDataSource)
 class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
-  IpFinderRemoteDataSourceImpl({required this.client});
+  IpFinderRemoteDataSourceImpl();
 
-  final http.Client client;
   final httpClient = HttpClient();
 
 

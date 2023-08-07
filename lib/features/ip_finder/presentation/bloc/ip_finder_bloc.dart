@@ -1,6 +1,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
 import 'package:ip_finder/core/usecases/use_case_my_ip.dart';
 import 'package:ip_finder/features/ip_finder/domain/enteties/ip_Info.dart';
 
@@ -11,11 +12,12 @@ import '../../domain/usecases/get_my_ip_info.dart';
 part 'ip_finder_event.dart';
 part 'ip_finder_state.dart';
 
+@injectable
 class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
-  IpFinderBloc({
-    required this.getMyIpInfo,
-    required this.getMyIp
-}) : super(EmptyState()) {
+  IpFinderBloc(
+     this.getMyIpInfo, //req//req
+     this.getMyIp
+) : super(EmptyState()) {
     on<GetMyIpInfoEvent>(_onGetMyIpInfo);
     on<GetOtherIpInfoEvent>(_onGetOtherIpInfo);
   }

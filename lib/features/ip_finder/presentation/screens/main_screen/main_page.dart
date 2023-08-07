@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ip_finder/core/injectable/injectable.dart';
 import 'package:ip_finder/features/ip_finder/presentation/screens/main_screen/text_output_widget.dart';
 
 import '../../../../../core/util/input_checker.dart';
@@ -15,17 +16,19 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final controller = TextEditingController();
-  final ipFinderBloc = sl<IpFinderBloc>();
+  //final ipFinderBloc = sl<IpFinderBloc>();
+
+  final newIpFinderBloc = getIt<IpFinderBloc>();
 
   @override
   Widget build(BuildContext context) {
-    InputChecker.checkInput('145.255.9.219');
+    //InputChecker.checkInput('145.255.9.219');
     controller.text = '123.123.23.32';
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         BlocBuilder<IpFinderBloc,IpFinderState>(
-            bloc: ipFinderBloc,
+            bloc: newIpFinderBloc,
             builder: (context, state){
               if(state is EmptyState){
                 return Text('emptyState');
@@ -44,7 +47,7 @@ class _MainPageState extends State<MainPage> {
         const SizedBox(height: 20),
         TextButton(
           onPressed: () {
-            ipFinderBloc.add(GetMyIpInfoEvent());
+            newIpFinderBloc.add(GetMyIpInfoEvent());
           },
           child: const Text('Посмотреть свой IP'),
         ),
@@ -54,7 +57,7 @@ class _MainPageState extends State<MainPage> {
         ),
         TextButton(
           onPressed: () {
-            ipFinderBloc.add(GetOtherIpInfoEvent(controller.text));
+            newIpFinderBloc.add(GetOtherIpInfoEvent(controller.text));
           },
           child: const Text('Посмотреть другой IP'),
         ),
@@ -82,7 +85,7 @@ class ButtonWidget extends StatelessWidget {
     );
   }
 }
-
+/*
 class ButtonTwoWidget extends StatelessWidget {
   const ButtonTwoWidget({
     Key? key,
@@ -98,4 +101,4 @@ class ButtonTwoWidget extends StatelessWidget {
       child: const Text('Посмотреть другой IP'),
     );
   }
-}
+}*/

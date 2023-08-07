@@ -7,7 +7,7 @@ import 'features/ip_finder/domain/repositories/ip_finder_repository.dart';
 import 'features/ip_finder/domain/usecases/get_my_ip_info.dart';
 import 'features/ip_finder/presentation/bloc/ip_finder_bloc.dart';
 import 'package:http/http.dart' as http;
-
+/*
 final sl = GetIt.instance;
 
 void init() {
@@ -29,7 +29,7 @@ void init() {
   );
 
   sl.registerLazySingleton<IpFinderRemoteDataSource>(
-      () => IpFinderRemoteDataSourceImpl(client: sl()));
+      () => IpFinderRemoteDataSourceImpl());
 
   sl.registerLazySingleton(() => http.Client());
 
@@ -37,3 +37,4 @@ void init() {
 
   sl.registerLazySingleton(() => InternetConnectionChecker());
 }
+*/

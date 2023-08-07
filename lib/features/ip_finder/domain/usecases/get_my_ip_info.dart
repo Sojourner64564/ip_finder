@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
 
 import 'package:ip_finder/core/error/failures.dart';
 import 'package:ip_finder/features/ip_finder/domain/enteties/ip_Info.dart';
@@ -8,6 +9,7 @@ import '../../../../core/usecases/use_case_my_ip.dart';
 import '../enteties/ip.dart';
 import '../repositories/ip_finder_repository.dart';
 
+@lazySingleton
 class GetMyIp implements UseCaseMyIp<IpEntety, NoParams>{
   GetMyIp(this.ipFinderRepository);
 
@@ -19,6 +21,7 @@ class GetMyIp implements UseCaseMyIp<IpEntety, NoParams>{
   }
 }
 
+@lazySingleton
 class GetMyIpInfo implements UseCaseMyIp<IpInfoEntety, Params>{
   GetMyIpInfo(this.ipFinderRepository);
 

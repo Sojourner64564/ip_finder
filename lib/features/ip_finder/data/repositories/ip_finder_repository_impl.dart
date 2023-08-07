@@ -1,19 +1,23 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:ip_finder/core/error/failures.dart';
 import 'package:ip_finder/features/ip_finder/data/data_sources/ip_finder_remote_data_sources.dart';
 import 'package:ip_finder/features/ip_finder/domain/enteties/ip.dart';
 import 'package:ip_finder/features/ip_finder/domain/enteties/ip_Info.dart';
+import '../../../../core/injectable/injectable.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/repositories/ip_finder_repository.dart';
 
+@LazySingleton(as: IpFinderRepository)
 class IpFinderRepositoryImpl implements IpFinderRepository{
-  IpFinderRepositoryImpl({
-    required this.ipFinderRemoteDataSource,
-    required this.networkInfo
-  });
+  IpFinderRepositoryImpl(
+     this.ipFinderRemoteDataSource, //req
+     this.networkInfo  //req
+  );
 
   final IpFinderRemoteDataSource ipFinderRemoteDataSource;
   final NetworkInfo networkInfo;
+
 
 @override
   Future<Either<Failure, IpEntety>> getMyIp() async{
@@ -36,3 +40,6 @@ class IpFinderRepositoryImpl implements IpFinderRepository{
   }
 
 }
+
+
+
