@@ -4,7 +4,6 @@ import 'core/network/network_info.dart';
 import 'features/ip_finder/data/data_sources/ip_finder_remote_data_sources.dart';
 import 'features/ip_finder/data/repositories/ip_finder_repository_impl.dart';
 import 'features/ip_finder/domain/repositories/ip_finder_repository.dart';
-import 'features/ip_finder/domain/usecases/get_my_ip_info.dart';
 import 'features/ip_finder/presentation/bloc/ip_finder_bloc.dart';
 import 'package:http/http.dart' as http;
 /*

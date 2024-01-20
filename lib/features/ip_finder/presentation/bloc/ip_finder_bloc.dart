@@ -4,9 +4,12 @@ import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:ip_finder/core/usecases/use_case_my_ip.dart';
 import 'package:ip_finder/features/ip_finder/domain/enteties/ip_Info.dart';
+import 'package:ip_finder/features/ip_finder/domain/usecases/get_my_ip/get_my_ip.dart';
+import 'package:ip_finder/features/ip_finder/domain/usecases/get_my_ip_info/get_my_ip_info.dart';
+import 'package:ip_finder/features/ip_finder/domain/usecases/params/no_params.dart';
+import 'package:ip_finder/features/ip_finder/domain/usecases/params/params.dart';
 
 import '../../domain/enteties/ip.dart';
-import '../../domain/usecases/get_my_ip_info.dart';
 
 
 part 'ip_finder_event.dart';
@@ -14,9 +17,7 @@ part 'ip_finder_state.dart';
 
 @lazySingleton
 class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
-  IpFinderBloc(
-     this.getMyIpInfo, //req//req
-     this.getMyIp
+  IpFinderBloc(this.getMyIpInfo, this.getMyIp,
 ) : super(EmptyState()) {
     on<GetMyIpInfoEvent>(_onGetMyIpInfo);
     on<GetOtherIpInfoEvent>(_onGetOtherIpInfo);
@@ -34,14 +35,16 @@ class IpFinderBloc extends Bloc<IpFinderEvent, IpFinderState> {
       throw UnimplementedError();
     }
     final failureOrIpInfoEither = await getMyIpInfo.call(Params(ipString: (failureOrIp as IpEntety).ip));
-    emit(failureOrIpInfoEither.fold((failure) => ErrorState('thats a error over there'), (ipInfo) => LoadedState(ipInfo)));
+    final ipInfoOrFailure = failureOrIpInfoEither.fold((failure) => ErrorState('thats a error over there'), (ipInfo) => LoadedState(ipInfo));
+    emit(ipInfoOrFailure);
   }
 
   void _onGetOtherIpInfo(GetOtherIpInfoEvent event, Emitter<IpFinderState> state) async{
     emit(LoadingState());
     final String otherIpString = event.otherIpString;
     final failureOrIpOtherInfoEither = await getMyIpInfo.call(Params(ipString: otherIpString));
-    emit(failureOrIpOtherInfoEither.fold((failure) => ErrorState('message'), (ipInfo) => LoadedState(ipInfo)));
+    final ipOtherInfoOrFailure = failureOrIpOtherInfoEither.fold((failure) => ErrorState('message'), (ipInfo) => LoadedState(ipInfo));
+    emit(ipOtherInfoOrFailure);
   }
 
 

@@ -1,27 +1,44 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-
+import 'package:ip_finder/core/data_sources/ip_finder_remote_data_source/ip_finder_remote_data_source.dart';
 import '../../../../core/error/exceptions.dart';
 import '../models/ip_info_model.dart';
 import '../models/ip_model.dart';
 import 'package:http/http.dart' as http;
 
-
-abstract class IpFinderRemoteDataSource{
-Future<IpModel> getIp();
-Future<IpInfoModel> getIpInfo(String ipString);
-}
-
 @LazySingleton(as: IpFinderRemoteDataSource)
-class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
+class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource {
   IpFinderRemoteDataSourceImpl();
 
-  final httpClient = HttpClient();
 
+  @override
+  Future<IpModel> getIp() async {
+    final response = await http.get(
+      Uri.parse('https://api.ipify.org/?format=json'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode == 200) {
+      return IpModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
 
+  @override
+  Future<IpInfoModel> getIpInfo(String ipString) async {
+    final response = await http.get(
+      Uri.parse('https://ipinfo.io/$ipString/geo'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode == 200) {
+      return IpInfoModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+}
+
+/*
   @override
   Future<IpModel> getIp() async{
     final url = Uri.parse('https://api.ipify.org/?format=json');
@@ -38,6 +55,7 @@ class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
       return ipResponseModel;
   }
 
+
   @override
   Future<IpInfoModel> getIpInfo(String ipString) async{
     final url = Uri.parse('https://ipinfo.io/$ipString/geo');
@@ -53,6 +71,4 @@ class IpFinderRemoteDataSourceImpl implements IpFinderRemoteDataSource{
     final ipInfoResponseModel = IpInfoModel.fromJson(myJson);
     return ipInfoResponseModel;
   }
-
-}
-
+ */

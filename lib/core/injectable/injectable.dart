@@ -15,14 +15,10 @@ final getIt = GetIt.instance;
 @InjectableInit()
 void configureDependencies() => $initGetIt(getIt);
 
-
-
-
 @module
 abstract class RegisterModuleConnectionChecker{
   InternetConnectionChecker get internetConnection => InternetConnectionChecker();
 }
-
 
 
 

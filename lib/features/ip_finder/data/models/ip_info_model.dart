@@ -1,5 +1,3 @@
-
-
 import '../../domain/enteties/ip_Info.dart';
 
 class IpInfoModel extends IpInfoEntety{
@@ -33,11 +31,6 @@ class IpInfoModel extends IpInfoEntety{
     );
   }
 
- /* Map<String, dynamic> toJson(){
-    return {
-      'ip': ip,
-    };
-  }*/
 }
 
 
