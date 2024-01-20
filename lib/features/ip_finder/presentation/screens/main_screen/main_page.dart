@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ip_finder/core/injectable/injectable.dart';
 import 'package:ip_finder/features/ip_finder/presentation/screens/main_screen/text_output_widget.dart';
-
-import '../../../../../core/util/input_checker.dart';
-import '../../../../../injection_container.dart';
 import '../../bloc/ip_finder_bloc.dart';
 
 class MainPage extends StatefulWidget {
@@ -68,37 +65,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
-class ButtonWidget extends StatelessWidget {
-  const ButtonWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        BlocProvider.of<IpFinderBloc>(context).add(GetMyIpInfoEvent());
-       // sl<IpFinderBloc>().add(GetMyIpInfoEvent());
-      },
-      child: const Text('Посмотреть свой IP'),
-    );
-  }
-}
-/*
-class ButtonTwoWidget extends StatelessWidget {
-  const ButtonTwoWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        BlocProvider.of<IpFinderBloc>(context).add(GetOtherIpInfoEvent('123.123.23.32'));
-        //sl<IpFinderBloc>().add(GetOtherIpInfoEvent(controller.text));
-      },
-      child: const Text('Посмотреть другой IP'),
-    );
-  }
-}*/
